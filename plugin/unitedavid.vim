@@ -12,6 +12,7 @@ nnoremap <unique> <Leader>of :Unite -start-insert outline<CR>
 nnoremap <unique> <Leader>oh :Unite -start-insert history/command<CR>
 nnoremap <unique> <Leader>ol :Unite -start-insert line<CR>
 nnoremap <unique> <Leader>om :Unite -start-insert neomru/file<CR>
+nnoremap <unique> <Leader>on :UniteSameName<CR>
 nnoremap <unique> <Leader>or :Unite -start-insert register<CR>
 nnoremap <unique> <Leader>os :Unite -start-insert history/search<CR>
 nnoremap <unique> <Leader>oy :Unite -start-insert history/yank<CR>
@@ -24,3 +25,5 @@ call unite#custom#profile('default', 'context', { 'cursor_line_highlight' : 'Cur
 " Ensure outline uses smartcase (doesn't work. not sure if doing it wrong.).
 call unite#custom#profile('outline', 'context', { 'ignorecase': 1 })
 call unite#custom#profile('outline', 'context', { 'smartcase':  1 })
+
+command! UniteSameName exec 'Unite -start-insert -input='. expand('%:t:r') .' neomru/file'
