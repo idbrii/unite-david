@@ -6,6 +6,7 @@ nnoremap <unique> <Leader>o <nop>
 let unite_script = expand("<sfile>/../bin/uniteopenfilelist.py")
 let unite_script = unite_script[2:]
 exec 'nnoremap <unique> <Leader>oo :Unite -start-insert script:python:'. unite_script .'<CR>'
+nnoremap <unique> <Leader>o<Space> :UniteResume<CR>
 nnoremap <unique> <Leader>ob :Unite -start-insert buffer<CR>
 nnoremap <unique> <Leader>oc :Unite -start-insert command<CR>
 nnoremap <unique> <Leader>of :Unite -start-insert outline<CR>
