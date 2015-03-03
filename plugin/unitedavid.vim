@@ -10,6 +10,7 @@ if has("win32")
     let g:unite_script = unite_script[2:]
 endif
 execute "command! UniteFiles    Unite -start-insert -buffer-name=files script:python:". unite_script
+execute "command! UniteSameNameSlow exec 'Unite -start-insert -buffer-name=samename -input='. expand('%:t:r') .' script:python:". unite_script ."'"
 unlet g:unite_script
 
 nnoremap <unique> <Leader>o<Space> :UniteResume<CR>
@@ -35,4 +36,5 @@ call unite#custom#profile('default', 'context', { 'cursor_line_highlight' : 'Cur
 call unite#custom#profile('outline', 'context', { 'ignorecase': 1 })
 call unite#custom#profile('outline', 'context', { 'smartcase':  1 })
 
+" The UniteSameNameSlow is so slow, that mru is preferable.
 command! UniteSameName exec 'Unite -start-insert -buffer-name=samename -input='. expand('%:t:r') .' neomru/file'
