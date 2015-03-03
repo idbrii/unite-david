@@ -9,10 +9,11 @@ let g:unite_script = expand("<sfile>:h:h") ."/bin/uniteopenfilelist.py"
 if has("win32")
     let g:unite_script = unite_script[2:]
 endif
-exec 'nnoremap <unique> <Leader>oo :Unite -start-insert -buffer-name=files script:python:'. unite_script .'<CR>'
+execute "command! UniteFiles    Unite -start-insert -buffer-name=files script:python:". unite_script
 unlet g:unite_script
 
 nnoremap <unique> <Leader>o<Space> :UniteResume<CR>
+nnoremap <unique> <Leader>oo :UniteFiles<CR>
 
 nnoremap <unique> <Leader>ob :Unite -start-insert -buffer-name=buffer   buffer<CR>
 nnoremap <unique> <Leader>oc :Unite -start-insert -buffer-name=command  command<CR>
