@@ -1,11 +1,17 @@
 
 " g:unite_source_history_yank_enable = 1 must be set in before_vimrc.
 
+" Make sure there's nothing behind the initial leader.
 nnoremap <unique> <Leader>o <nop>
+
 " Unite doesn't like drive letters.
-let unite_script = expand("<sfile>/../bin/uniteopenfilelist.py")
-let unite_script = unite_script[2:]
+let g:unite_script = expand("<sfile>:h:h") ."/bin/uniteopenfilelist.py"
+if has("win32")
+    let g:unite_script = unite_script[2:]
+endif
 exec 'nnoremap <unique> <Leader>oo :Unite -start-insert -buffer-name=files script:python:'. unite_script .'<CR>'
+unlet g:unite_script
+
 nnoremap <unique> <Leader>o<Space> :UniteResume<CR>
 
 nnoremap <unique> <Leader>ob :Unite -start-insert -buffer-name=buffer   buffer<CR>
