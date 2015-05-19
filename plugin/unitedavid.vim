@@ -30,6 +30,10 @@ nnoremap <unique> <Leader>oy :Unite -start-insert -buffer-name=yank     history/
 " Replace BufExplorer with unite
 nnoremap <unique> <Leader>e :Unite buffer -no-split -no-auto-resize -no-resize -buffer-name=bufexplorer<CR>
 
+" Fancier netrw with unite. I can still use - within it to go up (and into
+" netrw).
+nnoremap <unique> <Leader>- :Unite -start-insert -buffer-name=file     file<CR>
+
 " Make selection highlight readable.
 call unite#custom#profile('default', 'context', { 'cursor_line_highlight' : 'CursorLine' })
 " Ensure outline uses smartcase (doesn't work. not sure if doing it wrong.).
