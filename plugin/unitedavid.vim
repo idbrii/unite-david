@@ -7,7 +7,13 @@ nnoremap <unique> <Leader>o <nop>
 " Unite doesn't like drive letters.
 let g:unite_script = expand("<sfile>:h:h") ."/bin/uniteopenfilelist.py"
 if has("win32")
-    let g:unite_script = unite_script[2:]
+    " Try to use my drive links
+    let g:unite_script = '/'. unite_script[0] .'/'. unite_script[2:]
+
+    if !filereadable(g:unite_script)
+        " Fall back to no drive letter (might assume wrong drive on multi drive systems).
+        let g:unite_script = unite_script[2:]
+    endif
 endif
 execute "command! UniteFiles    Unite -start-insert -buffer-name=files script:python:". unite_script
 execute "command! UniteSameNameSlow exec 'Unite -start-insert -buffer-name=samename -input='. expand('%:t:r') .' script:python:". unite_script ."'"
