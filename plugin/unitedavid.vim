@@ -19,6 +19,17 @@ execute "command! UniteFiles    Unite -start-insert -buffer-name=files script:py
 execute "command! UniteSameNameSlow exec 'Unite -start-insert -buffer-name=samename -input='. expand('%:t:r') .' script:python:". unite_script ."'"
 unlet g:unite_script
 
+" If we have unite, use the fancy snippet completer.
+" Otherwise we'll fall back to the ugly uninteractive default one.
+if exists("g:did_plugin_ultisnips") && g:did_plugin_ultisnips > 0
+    " Copied from UltiSnips help.
+    function! UltiSnipsCallUnite()
+        Unite -start-insert -winheight=100 -immediately -no-empty ultisnips
+        return ''
+    endfunction
+    inoremap <silent> <C-r><C-j> <C-R>=(pumvisible()? "\<LT>C-E>":"")<CR><C-R>=UltiSnipsCallUnite()<CR>
+endif
+
 nnoremap <unique> <Leader>o<Space> :UniteResume<CR>
 nnoremap <unique> <Leader>oo :UniteFiles<CR>
 
