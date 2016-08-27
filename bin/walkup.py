@@ -13,6 +13,10 @@ a given directory.
 Source: https://gist.github.com/zdavkeos/1098474/
 """
 
+from __future__ import absolute_import
+from __future__ import division
+from __future__ import print_function
+from __future__ import unicode_literals
 
 import os
 from os import path
@@ -29,7 +33,7 @@ def walk_up(bottom):
     try:
         names = os.listdir(bottom)
     except Exception as e:
-        print e
+        print(e)
         return
 
 
@@ -57,13 +61,13 @@ if __name__ == '__main__':
     #print all files and directories
     # directly above the current one
     for i in walk_up(os.curdir):
-        print i
+        print(i)
 
     # look for a TAGS file above the
     # current directory
     for c,d,f in walk_up(os.curdir):
         if 'TAGS' in f:
-            print c
+            print(c)
             break
 
 
