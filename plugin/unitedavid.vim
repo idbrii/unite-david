@@ -19,6 +19,12 @@ execute "command! UniteFiles    Unite -start-insert -buffer-name=files script:py
 execute "command! UniteSameNameSlow exec 'Unite -start-insert -buffer-name=samename -input='. expand('%:t:r') .' script:python:". unite_script ."'"
 unlet g:unite_script
 
+" If we have vimproc, use that instead of the python script.
+if exists("g:loaded_vimproc") && g:loaded_vimproc > 0
+    let g:unite_source_rec_async_command = 'python '. expand("<sfile>:h:h") ."/bin/uniteprintfilelist.py"
+    command! -nargs=* UniteFiles    Unite -start-insert -buffer-name=files file_rec/async <args>
+endif
+
 " If we have unite, use the fancy snippet completer.
 " Otherwise we'll fall back to the ugly uninteractive default one.
 if exists("g:did_plugin_ultisnips") && g:did_plugin_ultisnips > 0
@@ -32,6 +38,10 @@ endif
 
 nnoremap <unique> <Leader>o<Space> :UniteResume<CR>
 nnoremap <unique> <Leader>oo :UniteFiles<CR>
+" TODO: Figure out how to do this with required_pattern_length instead.
+" TODO: Does this actually make it any faster?
+" https://www.reddit.com/r/vim/comments/4zr3bl/how_do_i_use_unites_required_pattern_length/
+nnoremap <Leader>oo :UniteFiles -input=
 
 nnoremap <unique> <Leader>ob :Unite -start-insert -buffer-name=buffer   buffer<CR>
 nnoremap <unique> <Leader>oc :Unite -start-insert -buffer-name=command  command<CR>
