@@ -1,8 +1,15 @@
 " Code that depends on other plugins existing.
 
-if exists('g:david_project_filelist')
+if exists("g:loaded_tagfilehelpers") && g:loaded_tagfilehelpers > 0
+    function! s:GetFilelist()
+        if !exists('g:david_project_filelist')
+            call LocateFilelist()
+        endif
+        return g:david_project_filelist
+    endf
+
     " Best solution is file_list if we know where it is.
-    command! -nargs=* UniteFiles :exec 'Unite -start-insert file_list:'. escape(g:david_project_filelist, ':') . ' <args>'
+    command! -nargs=* UniteFiles :exec 'Unite -start-insert file_list:'. escape(s:GetFilelist(), ':') . ' <args>'
     " This version of UniteFiles is fast.
     command! UniteSameName UniteSameNameSlow
 
