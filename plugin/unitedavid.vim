@@ -22,6 +22,7 @@ unlet g:unite_script
 " If we have vimproc, use that instead of the python script.
 if exists("g:loaded_vimproc") && g:loaded_vimproc > 0
     let g:unite_source_rec_async_command = 'python '. expand("<sfile>:h:h") ."/bin/uniteprintfilelist.py"
+    call unite#custom#source('file_rec/async', 'required_pattern_length', 3)
     command! -nargs=* UniteFiles    Unite -start-insert -buffer-name=files file_rec/async <args>
 endif
 
@@ -38,10 +39,6 @@ endif
 
 nnoremap <unique> <Leader>o<Space> :UniteResume<CR>
 nnoremap <unique> <Leader>oo :UniteFiles<CR>
-" TODO: Figure out how to do this with required_pattern_length instead.
-" TODO: Does this actually make it any faster?
-" https://www.reddit.com/r/vim/comments/4zr3bl/how_do_i_use_unites_required_pattern_length/
-nnoremap <Leader>oo :UniteFiles -input=
 
 nnoremap <unique> <Leader>ob :Unite -start-insert -buffer-name=buffer   buffer<CR>
 nnoremap <unique> <Leader>oc :Unite -start-insert -buffer-name=command  command<CR>
