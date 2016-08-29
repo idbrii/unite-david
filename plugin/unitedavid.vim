@@ -4,6 +4,9 @@
 " Make sure there's nothing behind the initial leader.
 nnoremap <unique> <Leader>o <nop>
 
+" The UniteSameNameSlow is so slow, that mru is preferable.
+command! UniteSameName exec 'Unite -start-insert -buffer-name=samename -input='. expand('%:t:r') .' neomru/file'
+
 " Unite doesn't like drive letters.
 let g:unite_script = expand("<sfile>:h:h") ."/bin/uniteopenfilelist.py"
 if has("win32")
@@ -63,6 +66,3 @@ call unite#custom#profile('default', 'context', { 'cursor_line_highlight' : 'Cur
 " Ensure outline uses smartcase (doesn't work. not sure if doing it wrong.).
 call unite#custom#profile('outline', 'context', { 'ignorecase': 1 })
 call unite#custom#profile('outline', 'context', { 'smartcase':  1 })
-
-" The UniteSameNameSlow is so slow, that mru is preferable.
-command! UniteSameName exec 'Unite -start-insert -buffer-name=samename -input='. expand('%:t:r') .' neomru/file'
