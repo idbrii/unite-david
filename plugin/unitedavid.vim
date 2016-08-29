@@ -4,8 +4,10 @@
 " Make sure there's nothing behind the initial leader.
 nnoremap <unique> <Leader>o <nop>
 
+
 " The UniteSameNameSlow is so slow, that mru is preferable.
-command! UniteSameName exec 'Unite -start-insert -buffer-name=samename -input='. expand('%:t:r') .' neomru/file'
+command! -nargs=* UniteSameName exec 'Unite -start-insert -buffer-name=samename -input='. expand('%:t:r') .' neomru/file <args>'
+command! -nargs=* UniteSameNameSlow :exec 'UniteFiles -buffer-name=samename -input='. expand('%:t:r') .' <args>'
 
 if exists('g:david_project_filelist')
     " Best solution is file_list if we know where it is.
@@ -14,12 +16,16 @@ if exists('g:david_project_filelist')
     command! UniteSameName UniteSameNameSlow
 
 elseif exists("g:loaded_vimproc") && g:loaded_vimproc > 0
-    " If we have vimproc, use that instead of the python script.
-    let g:unite_source_rec_async_command = 'python '. expand("<sfile>:h:h") ."/bin/uniteprintfilelist.py"
+    " If we have vimproc, we can use the python script to find the filelist.
+    " This is actually really slow.
+    let g:unite_source_rec_async_command = ['python', expand('<sfile>:h:h') .'/bin/uniteprintfilelist.py']
     call unite#custom#source('file_rec/async', 'required_pattern_length', 3)
-    command! -nargs=* UniteFiles    Unite -start-insert -buffer-name=files file_rec/async <args>
+    command! -nargs=* UniteFiles :Unite -start-insert -buffer-name=files file_rec/async <args>
 
 else
+    " If we don't have vimproc, we can use the script source to use a python
+    " script to find the filelist. This is really slow.
+
     " Unite doesn't like drive letters.
     let g:unite_script = expand("<sfile>:h:h") ."/bin/uniteopenfilelist.py"
     if has("win32")
@@ -31,11 +37,10 @@ else
             let g:unite_script = unite_script[2:]
         endif
     endif
-    execute "command! UniteFiles    Unite -start-insert -buffer-name=files script:python:". unite_script
-    execute "command! UniteSameNameSlow exec 'Unite -start-insert -buffer-name=samename -input='. expand('%:t:r') .' script:python:". unite_script ."'"
+    execute "command! -nargs=* UniteFiles    Unite -start-insert -buffer-name=files script:python:". unite_script ." <args>"
     unlet g:unite_script
-
 endif
+
 
 " If we have unite, use the fancy snippet completer.
 " Otherwise we'll fall back to the ugly uninteractive default one.
