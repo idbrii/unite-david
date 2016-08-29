@@ -7,8 +7,14 @@ nnoremap <unique> <Leader>o <nop>
 " The UniteSameNameSlow is so slow, that mru is preferable.
 command! UniteSameName exec 'Unite -start-insert -buffer-name=samename -input='. expand('%:t:r') .' neomru/file'
 
-" If we have vimproc, use that instead of the python script.
-if exists("g:loaded_vimproc") && g:loaded_vimproc > 0
+if exists('g:david_project_filelist')
+    " Best solution is file_list if we know where it is.
+    command! -nargs=* UniteFiles :exec 'Unite -start-insert file_list:'. escape(g:david_project_filelist, ':') . ' <args>'
+    " This version of UniteFiles is fast.
+    command! UniteSameName UniteSameNameSlow
+
+elseif exists("g:loaded_vimproc") && g:loaded_vimproc > 0
+    " If we have vimproc, use that instead of the python script.
     let g:unite_source_rec_async_command = 'python '. expand("<sfile>:h:h") ."/bin/uniteprintfilelist.py"
     call unite#custom#source('file_rec/async', 'required_pattern_length', 3)
     command! -nargs=* UniteFiles    Unite -start-insert -buffer-name=files file_rec/async <args>
