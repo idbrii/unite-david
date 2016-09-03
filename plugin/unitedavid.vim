@@ -21,6 +21,7 @@ nnoremap <unique> <Leader>on :UniteSameName<CR>
 nnoremap <unique> <Leader>or :Unite -start-insert -buffer-name=register register<CR>
 nnoremap <unique> <Leader>os :Unite -start-insert -buffer-name=search   history/search<CR>
 nnoremap <unique> <Leader>oy :Unite -start-insert -buffer-name=yank     history/yank<CR>
+nnoremap <unique> <Leader>ogf :<C-u>call unite#david#UniteFilesWithInput(expand('<cfile>:t'))<CR>
 
 " Replace BufExplorer with unite
 nnoremap <unique> <Leader>e :Unite buffer -no-split -no-auto-resize -no-resize -buffer-name=bufexplorer<CR>
