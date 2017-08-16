@@ -8,6 +8,11 @@ nnoremap <unique> <Leader>o <nop>
 command! -nargs=* UniteSameName exec 'Unite -start-insert -buffer-name=samename -input='. expand('%:t:r') .' neomru/file <args>'
 command! -nargs=* UniteSameNameSlow :exec 'UniteFiles -buffer-name=samename -input='. expand('%:t:r') .' <args>'
 
+" In theory this would be better if it processed 'rtp', but this works well
+" enough.
+command! -nargs=* UniteVimfiles :cd ~/.vim | Unite -start-insert -buffer-name=vimfiles file_rec <args>
+
+
 nnoremap <unique> <Leader>o<Space> :UniteResume<CR>
 nnoremap <unique> <Leader>oo :UniteFiles<CR>
 
