@@ -28,6 +28,10 @@ nnoremap <unique> <Leader>os :Unite -start-insert -buffer-name=search   history/
 nnoremap <unique> <Leader>oy :Unite -start-insert -buffer-name=yank     history/yank<CR>
 nnoremap <unique> <Leader>gf :<C-u>call unite#david#UniteFilesWithInput(expand('<cfile>:t'))<CR>
 
+" This one is filetype-dependent. Default here to vimdoc.
+" Mnemonic: Open K (vim for help)
+nnoremap <unique> <Leader>ok :Unite -start-insert -buffer-name=vimdoc   help<CR>
+
 " Replace BufExplorer with unite
 nnoremap <unique> <Leader>e :Unite buffer -no-split -no-auto-resize -no-resize -buffer-name=bufexplorer<CR>
 
