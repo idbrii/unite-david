@@ -30,7 +30,7 @@ nnoremap <unique> <Leader>gf :<C-u>call unite#david#UniteFilesWithInput(expand('
 
 " This one is filetype-dependent. Default here to vimdoc.
 " Mnemonic: Open K (vim for help)
-nnoremap <unique> <Leader>ok :Unite -start-insert -buffer-name=vimdoc   help<CR>
+nnoremap <buffer> <Leader>ok "cyiw:Unite -start-insert -buffer-name=vimdoc help -input=<C-r>c<CR>
 
 " Replace BufExplorer with unite
 nnoremap <unique> <Leader>e :Unite buffer -no-split -no-auto-resize -no-resize -buffer-name=bufexplorer<CR>
