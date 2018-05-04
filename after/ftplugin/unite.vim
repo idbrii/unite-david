@@ -18,3 +18,6 @@ function! s:unite_delete()
 endf
 nnoremap <silent><buffer><expr> D <SID>unite_delete()
 
+" Easy split that's not already in use. (Saving and completing braces doesn't
+" make sense in unite.)
+inoremap <silent><buffer><expr> <C-s> unite#do_action('split')
