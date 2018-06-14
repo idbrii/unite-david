@@ -7,7 +7,7 @@ nmap <buffer> <silent> <C-l> <Plug>(unite_redraw)<Plug>(david-redraw-screen)
 
 " Unlike d, D doesn't wait after input.
 function! s:unite_delete()
-    " First line is for editing, so work like normal.
+    " First line is for editing, so work like normal vim.
     if getcurpos()[1] == 1
         return 'D'
     else
@@ -21,3 +21,7 @@ nnoremap <silent><buffer><expr> D <SID>unite_delete()
 " Easy split that's not already in use. (Saving and completing braces doesn't
 " make sense in unite.)
 inoremap <silent><buffer><expr> <C-s> unite#do_action('split')
+
+" Allow me to move back. I never use bookmarking so push it to capitalized.
+nunmap <buffer> b
+nnoremap <buffer><silent><expr><nowait> B unite#smart_map('b', unite#do_action('bookmark'))
