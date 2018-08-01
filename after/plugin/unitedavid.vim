@@ -9,7 +9,7 @@ if exists("g:loaded_tagfilehelpers") && g:loaded_tagfilehelpers > 0
     endf
 
     " Best solution is file_list if we know where it is.
-    command! -nargs=* UniteFiles :exec 'Unite -start-insert file_list:'. escape(s:GetFilelist(), ':') . ' <args>'
+    command! -nargs=* UniteFiles :exec 'Denite unite:file_list:'. escape(s:GetFilelist(), ':') . ' <args>'
     " This version of UniteFiles is fast.
     command! UniteSameName UniteSameNameSlow
 
@@ -18,7 +18,7 @@ elseif exists("g:loaded_vimproc") && g:loaded_vimproc > 0
     " This is actually really slow.
     let g:unite_source_rec_async_command = ['python', expand('<sfile>:h:h') .'/bin/uniteprintfilelist.py']
     call unite#custom#source('file_rec/async', 'required_pattern_length', 3)
-    command! -nargs=* UniteFiles :Unite -start-insert -buffer-name=files file_rec/async <args>
+    command! -nargs=* UniteFiles :Denite -buffer-name=files file/rec <args>
 
 else
     " If we don't have vimproc, we can use the script source to use a python
@@ -35,7 +35,7 @@ else
             let g:unite_script = unite_script[2:]
         endif
     endif
-    execute "command! -nargs=* UniteFiles    Unite -start-insert -buffer-name=files script:python:". unite_script ." <args>"
+    execute "command! -nargs=* UniteFiles    Unite -buffer-name=files script:python:". unite_script ." <args>"
     unlet g:unite_script
 endif
 
@@ -44,7 +44,8 @@ endif
 if exists("g:did_plugin_ultisnips") && g:did_plugin_ultisnips > 0
     " Copied from UltiSnips help.
     function! UltiSnipsCallUnite()
-        Unite -start-insert -winheight=100 -immediately -no-empty ultisnips
+        " Only Unite so far: https://github.com/SirVer/ultisnips/issues/869
+        Denite -winheight=100 -immediately -no-empty unite:ultisnips
         return ''
     endfunction
     inoremap <silent> <C-r><C-j> <C-R>=(pumvisible()? "\<LT>C-E>":"")<CR><C-R>=UltiSnipsCallUnite()<CR>
