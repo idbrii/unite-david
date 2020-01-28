@@ -44,3 +44,29 @@ call unite#custom#profile('default', 'context', { 'cursor_line_highlight' : 'Cur
 " Ensure outline uses smartcase (doesn't work. not sure if doing it wrong.).
 call unite#custom#profile('outline', 'context', { 'ignorecase': 1 })
 call unite#custom#profile('outline', 'context', { 'smartcase':  1 })
+
+
+
+" To use unite with ripgrep:
+"   :Dirvish
+"   (navigate to desired root)
+"   :Unite grep:%
+" You'll be prompted for your search query and get the results in a unite
+" buffer.
+function! s:ConfigureRipGrep()
+    let possible_locations = [get(g:, 'david_ripgrep_path'), 'rg', '~/bin/rg.exe']
+    if has('win32')
+        call add(possible_locations, 'c:/david/bin/rg.exe')
+    endif
+
+    for exe in possible_locations
+        if executable(exe)
+            let g:unite_source_grep_command = exe
+            let g:unite_source_grep_default_opts = '--hidden --no-heading --vimgrep -S'
+            let g:unite_source_grep_recursive_opt = ''
+            return
+        endif
+    endfor
+endf
+call s:ConfigureRipGrep()
+
