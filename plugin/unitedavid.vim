@@ -12,6 +12,8 @@ command! -nargs=* UniteSameNameSlow :exec 'UniteFiles -buffer-name=samename -inp
 " enough.
 command! -nargs=* UniteVimfiles :cd ~/.vim | Unite -start-insert -buffer-name=vimfiles file_rec <args>
 
+" Requires my unite-tselect plugin.
+command! -nargs=* Tselect Unite tselect:<args>
 
 nnoremap <unique> <Leader>o<Space> :UniteResume<CR>
 nnoremap <unique> <Leader>oo :UniteFiles<CR>
