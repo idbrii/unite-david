@@ -56,7 +56,7 @@ call unite#custom#profile('outline', 'context', { 'smartcase':  1 })
 " You'll be prompted for your search query and get the results in a unite
 " buffer.
 function! s:ConfigureRipGrep()
-    let possible_locations = [get(g:, 'david_ripgrep_path'), 'rg', '~/bin/rg.exe']
+    let possible_locations = [get(g:, 'david_ripgrep_path', 'rg'), 'rg', '~/bin/rg.exe']
     if has('win32')
         call add(possible_locations, 'c:/david/bin/rg.exe')
     endif
